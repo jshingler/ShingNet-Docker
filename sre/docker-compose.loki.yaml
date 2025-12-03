@@ -1,0 +1,18 @@
+services:
+  loki:
+    image: grafana/loki:latest
+    container_name: loki
+    restart: always
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - observability
+    volumes:
+      - ./loki/loki-config.yaml:/mnt/config/loki-config.yaml # Mounts the Loki configuration file.
+      - loki_data:/loki
+
+networks:
+  observability:
+    external: true
+

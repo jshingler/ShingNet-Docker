@@ -1,0 +1,48 @@
+server:
+  http_listen_address: 0.0.0.0:3200
+  grpc_listen_address: 0.0.0.0:9095
+
+distributor:
+  receivers:
+    otlp:
+      protocols:
+        http:
+          endpoint: 0.0.0.0:4318
+        grpc:
+          endpoint: 0.0.0.0:4317
+    jaeger:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:14250
+        thrift_http:
+          endpoint: 0.0.0.0:14268
+    zipkin:
+      endpoint: 0.0.0.0:9411
+
+ingester:
+  max_block_bytes: 1_000_000
+  max_block_duration: 30m
+  flush_check_period: 10s
+
+storage:
+  trace:
+    backend: local
+    local:
+      path: /var/tempo/traces
+    wal:
+      path: /var/tempo/wal
+
+compactor:
+  compaction:
+    block_retention: 48h
+    compacted_block_retention: 1h
+    max_block_bytes: 100_000_000
+
+querier:
+  frontend_worker:
+    frontend_address: 0.0.0.0:9095
+
+overrides:
+  per_tenant_override_config: /etc/tempo/overrides.yaml
+  defaults:
+    per_tenant_override_config: /etc/tempo/overrides.yaml

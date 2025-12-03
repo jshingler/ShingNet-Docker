@@ -1,0 +1,19 @@
+
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: always
+    network_mode: "host"
+    environment:
+      - OLLAMA_BASE_URL=http://localhost:11434
+    volumes:
+      - openwebui-data:/app/backend/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 5s
+      timeout: 2s
+      retries: 5
+
+volumes:
+  openwebui-data:
