@@ -1,0 +1,52 @@
+
+services:
+  openldap:
+    image: bitnami/openldap:latest
+    container_name: openldap
+    restart: always
+    ports:
+      - "1389:1389"   # Non-Root Container
+        #- "636:636"
+        #networks:
+        #default:
+        #aliases:
+        #- ldap
+    environment:
+      - LDAP_ADMIN_USERNAME=admin
+      - LDAP_ADMIN_PASSWORD=adminpassword
+      - LDAP_USERS=jshingler
+      - LDAP_PASSWORDS=changeme
+      - LDAP_LISTEN_ADDRESS=0.0.0.0
+      - LDAP_ROOT=dc=example,dc=org
+    volumes:
+      - ./ldap_data:/bitnami/openldap
+    networks:
+      - ldapnet
+
+  lam:
+    image: ghcr.io/ldapaccountmanager/lam:stable
+    container_name: ldaplam
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      - LAM_PASSWORD=lamadmin
+      - LAM_HTTPS_BY_REVERSE_PROXY=true
+      - LAM_DEFAULT_SERVER=ldap://openldap:1389
+    depends_on:
+      - openldap
+    networks:
+      - ldapnet
+
+  netshoot:
+    image: nicolaka/netshoot
+    container_name: debug-tools
+    command: sleep infinity
+    networks:
+      - ldapnet
+
+networks:
+  ldapnet:
+    name: ldapnet
+
+

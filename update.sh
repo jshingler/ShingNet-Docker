@@ -19,6 +19,10 @@ cd ~/bin && ./ollama-update-models.sh
 print_section "N8N"
 cd ~/n8n && ./update.sh
 
+# Update Cloudflared
+print_section "Cloudflared"
+cd ~/docker/cloudflare && ./update.sh
+
 # Update Open-WebUI
 print_section "Open WebUI"
 cd ~/docker/open-webui && ./update.sh

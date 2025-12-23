@@ -14,8 +14,10 @@ services:
       - GF_SECURITY_ALLOW_EMBEDDING=true  # 
 
       # --- Correct domain + subpath ---
-      - GF_SERVER_DOMAIN=jshingler.asuscomm.com
-      - GF_SERVER_ROOT_URL=https://jshingler.asuscomm.com/grafana/
+      #- GF_SERVER_DOMAIN=jshingler.asuscomm.com
+      #- GF_SERVER_ROOT_URL=https://jshingler.asuscomm.com/grafana/
+      - GF_SERVER_DOMAIN=grafana.jshingler.net
+      - GF_SERVER_ROOT_URL=https://grafana.jshingler.net/
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
 
       # --- Key fix: trust proxy auth headers ---

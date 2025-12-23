@@ -8,7 +8,7 @@ services:
       - prometheus_data:/prometheus
     command:
       - '--web.enable-lifecycle'
-      - '--web.external-url=https://jshingler.asuscomm.com/prometheus/'
+      - '--web.external-url=https://prometheus.jshingler.net/'
       - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
       - "9090:9090"
@@ -19,3 +19,5 @@ networks:
   observability:
     external: true
 
+volumes:
+  prometheus_data:

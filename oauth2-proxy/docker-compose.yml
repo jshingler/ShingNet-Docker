@@ -5,13 +5,14 @@ services:
     command: --config /oauth2-proxy.cfg
     hostname: oauth2-proxy
     extra_hosts:
-      - "jshingler.asuscomm.com:74.133.75.33"
+      - "keycloak.jshingler.net:192.168.200.85"
+
     volumes:
       - "./oauth2-proxy.cfg:/oauth2-proxy.cfg"
     environment:
-      - OAUTH2_PROXY_CLIENT_ID=${OAUTH2_PROXY_CLIENT_ID}
-      - OAUTH2_PROXY_CLIENT_SECRET=${OAUTH2_PROXY_CLIENT_SECRET}
-      - OAUTH2_PROXY_COOKIE_SECRET=${OAUTH2_PROXY_COOKIE_SECRET}
+      - OAUTH2_PROXY_CLIENT_ID=${OAUTH2_PROXY_CLIENT_ID_CLOUDFLARE}
+      - OAUTH2_PROXY_CLIENT_SECRET=${OAUTH2_PROXY_CLIENT_SECRET_CLOUDFLARE}
+      - OAUTH2_PROXY_COOKIE_SECRET=${OAUTH2_PROXY_COOKIE_SECRET_CLOUDFLARE}
     ports:
       - "4180:4180"   # Auth endpoints
       - "4181:4181"   # Metrics (optional)
@@ -20,9 +21,12 @@ services:
       - 8.8.8.8
     networks:
       - observability
+      - keycloak-network
     restart: unless-stopped
 
 networks:
   observability:
+    external: true
+  keycloak-network:
     external: true
 

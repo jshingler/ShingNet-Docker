@@ -1,0 +1,17 @@
+#version: "3.8"
+services:
+  cloudflared:
+    container_name: cloudflared
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run --token eyJhIjoiMmUzZDA3Y2RiZWQ1ZmUwMmYzNmU5MzY2YjdkZGUwYzQiLCJ0IjoiMWVkNDMwZTAtYzk0ZS00NWIyLWJmM2UtMWEyMDFmNTgwNjUzIiwicyI6Ik16azRPVGswWW1ZdFlqWm1PQzAwTldZekxXSTVNMll0TVRNek56QmlZbVV5TkdReiJ9
+      #volumes:
+      #- /opt/cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+        # Using Tunnel Token,. Don't need the .json file
+        #- /opt/cloudflared/<YOUR-TUNNEL-ID>.json:/etc/cloudflared/<YOUR-TUNNEL-ID>.json:ro
+    restart: unless-stopped
+    networks:
+      - cloudflare-network
+networks:
+  cloudflare-network:
+    external: true
+
