@@ -4,6 +4,15 @@ services:
     image: quay.io/oauth2-proxy/oauth2-proxy:latest
     command: --config /oauth2-proxy.cfg
     hostname: oauth2-proxy
+    logging:
+      driver: loki
+      options:
+        loki-url: "https://loki.jshingler.net/loki/api/v1/push"
+        loki-retries: 2
+        loki-max-backoff: 800ms
+        loki-timeout: 1s
+        keep-file: "true"
+        mode: "non-blocking"
     extra_hosts:
       - "keycloak.jshingler.net:192.168.200.85"
 

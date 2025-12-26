@@ -1,0 +1,26 @@
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'shinglerjim@gmail.com'
+  smtp_auth_username: 'shinglerjim@gmail.com'
+  smtp_auth_password: 'S4md0g2020!'
+  smtp_require_tls: true
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 5m
+  repeat_interval: 3h
+  receiver: 'default'
+
+receivers:
+  - name: 'default'
+    email_configs:
+      - to: 'shinglerjim@gmail.com'
+        from: 'alertmanager@example.com'
+        smarthost: 'smtp.example.com:587'
+        auth_username: 'user'
+        auth_password: 'pass'
+        auth_identity: 'user'
+        require_tls: true
+

@@ -5,11 +5,16 @@ services:
     restart: always
     ports:
       - "3100:3100"
-    command: -config.file=/etc/loki/local-config.yaml
+    command: -config.file=/etc/loki/loki-config.yaml
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3100/ready"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
     networks:
       - observability
     volumes:
-      - ./loki/loki-config.yaml:/mnt/config/loki-config.yaml # Mounts the Loki configuration file.
+      - ./loki/loki-config.yaml:/etc/loki/loki-config.yaml # Mounts the Loki configuration file.
       - loki_data:/loki
 
 networks:

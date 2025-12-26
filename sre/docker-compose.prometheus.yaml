@@ -10,6 +10,7 @@ services:
       - '--web.enable-lifecycle'
       - '--web.external-url=https://prometheus.jshingler.net/'
       - '--config.file=/etc/prometheus/prometheus.yml'
+      - "--web.enable-remote-write-receiver"
     ports:
       - "9090:9090"
     networks:
