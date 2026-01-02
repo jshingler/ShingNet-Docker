@@ -50,3 +50,10 @@ cd ~/docker/kokoro && ./update.sh
 # Return to docker root
 cd ~/docker
 
+# Update Gemini CLI
+print_section "Gemini CLI"
+sudo npm install -g @google/gemini-cli@latest
+
+# Update Copilot CLI
+print_section "Copilot CLI"
+sudo npm update -g @github/copilot 
